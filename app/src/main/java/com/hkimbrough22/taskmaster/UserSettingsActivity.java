@@ -2,6 +2,7 @@ package com.hkimbrough22.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,9 +36,10 @@ public class UserSettingsActivity extends AppCompatActivity {
             String username2 = userSettingsUsername.getText().toString();
             sharedPrefEditor.putString(USER_USERNAME_KEY, username2);
             sharedPrefEditor.apply();
-//            Snackbar.make(findViewById(R.id.userSettingsImageView), , 1)
             Toast.makeText(this, R.string.submitted, Toast.LENGTH_SHORT).show();
-            Log.i(TAG, username2);
+            Intent mainActivityIntent = new Intent(UserSettingsActivity.this, MainActivity.class);
+            startActivity(mainActivityIntent);
+//            Log.i(TAG, username2);
         });
     }
 }

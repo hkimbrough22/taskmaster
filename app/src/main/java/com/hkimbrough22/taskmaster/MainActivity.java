@@ -1,10 +1,14 @@
 package com.hkimbrough22.taskmaster;
 
+import static com.hkimbrough22.taskmaster.UserSettingsActivity.USER_USERNAME_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.media.Image;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,20 +18,25 @@ public class MainActivity extends AppCompatActivity {
     public final static String SUBMITTED = "Submitted!";
     public final static String TASK_EXTRA_STRING = "taskNum";
 
+    protected static SharedPreferences sharedPref;
+    protected static Resources resources;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button addTaskButton = (Button) findViewById(R.id.homepageAddTaskButton);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        resources = getResources();
 
+        Button addTaskButton = findViewById(R.id.homepageAddTaskButton);
         addTaskButton.setOnClickListener(view -> {
             Intent addTaskIntent = new Intent(MainActivity.this, AddTaskActivity.class);
             startActivity(addTaskIntent);
         });
 
-        Button allTasksButton = (Button) findViewById(R.id.homepageAllTasksButton);
+        Button allTasksButton = findViewById(R.id.homepageAllTasksButton);
         allTasksButton.setOnClickListener(view -> {
             Intent allTasksIntent = new Intent(MainActivity.this, AllTasksActivity.class);
             startActivity(allTasksIntent);
@@ -63,6 +72,17 @@ public class MainActivity extends AppCompatActivity {
             taskDetailsIntent.putExtra(TASK_EXTRA_STRING, taskNum.getText());
             startActivity(taskDetailsIntent);
         });
+
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        String userName = sharedPref.getString(USER_USERNAME_KEY, "");
+        if(!userName.equals("")){
+            ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userName));
+        }
 
     }
 }
