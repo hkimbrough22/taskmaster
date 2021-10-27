@@ -6,4 +6,13 @@
     <string name="taskTitle">Task Title</string>
     <string name="taskDescription">Task Description</string>
     <string name="addTaskTitle">Add a Task</string>
+    <string name="userSettingsTitle">User Settings</string>
+    <string name="usernameTitle">Username</string>
+    <string name="save">Save</string>
+    <string name="submitted">Settings Saved!</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+    <string name="Task1">Task 1</string>
+    <string name="task2">Task 2</string>
+    <string name="task3">Task 3</string>
+    <string name="UsernameTasks">%1$s\'s Tasks</string>
 </resources>
