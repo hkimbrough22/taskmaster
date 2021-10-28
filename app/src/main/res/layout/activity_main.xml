@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <TextView
         android:id="@+id/homepageTitleTextView"
@@ -20,60 +20,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageView
-        android:id="@+id/homepageImageView"
-        android:layout_width="103dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="108dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/editbox_dropdown_dark_frame" />
-
-    <ImageView
-        android:id="@+id/homepageImageView2"
-        android:layout_width="105dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/homepageImageView3"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toEndOf="@+id/homepageImageView"
-        app:layout_constraintTop_toBottomOf="@+id/homepageTitleTextView"
-        app:srcCompat="@android:drawable/editbox_dropdown_dark_frame" />
-
-    <ImageView
-        android:id="@+id/homepageImageView3"
-        android:layout_width="105dp"
-        android:layout_height="104dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="36dp"
-        app:layout_constraintBottom_toBottomOf="@+id/homepageImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageTitleTextView"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@android:drawable/editbox_dropdown_dark_frame" />
-
     <Button
         android:id="@+id/homepageAddTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginStart="44dp"
         android:text="@string/addTask"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView" />
 
     <Button
         android:id="@+id/homepageAllTasksButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="44dp"
         android:text="@string/allTasks"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView" />
 
     <ImageView
         android:id="@+id/userSettingsImageView"
@@ -81,42 +46,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/homepageTitleTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
-    <TextView
-        android:id="@+id/homepageTask1TitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:text="@string/Task1"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/homepageTask2TitleTextView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageImageView" />
-
-    <TextView
-        android:id="@+id/homepageTask2TitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="176dp"
-        android:text="@string/task2"
-        android:textSize="20sp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskListRecyclerView"
+        android:layout_width="319dp"
+        android:layout_height="457dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageImageView2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homepageTitleTextView"
         app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/homepageTask3TitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:text="@string/task3"
-        android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/homepageTask2TitleTextView"
-        app:layout_constraintTop_toBottomOf="@+id/homepageImageView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
