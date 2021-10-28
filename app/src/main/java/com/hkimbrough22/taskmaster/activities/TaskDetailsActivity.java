@@ -1,10 +1,12 @@
-package com.hkimbrough22.taskmaster;
+package com.hkimbrough22.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.hkimbrough22.taskmaster.R;
 
 public class TaskDetailsActivity extends AppCompatActivity {
 

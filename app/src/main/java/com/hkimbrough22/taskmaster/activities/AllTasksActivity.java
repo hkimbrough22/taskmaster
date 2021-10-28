@@ -1,8 +1,10 @@
-package com.hkimbrough22.taskmaster;
+package com.hkimbrough22.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.hkimbrough22.taskmaster.R;
 
 public class AllTasksActivity extends AppCompatActivity {
 

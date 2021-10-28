@@ -1,8 +1,10 @@
-package com.hkimbrough22.taskmaster;
+package com.hkimbrough22.taskmaster.activities;
 
-import static com.hkimbrough22.taskmaster.UserSettingsActivity.USER_USERNAME_KEY;
+import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.USER_USERNAME_KEY;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,19 +15,72 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hkimbrough22.taskmaster.R;
+import com.hkimbrough22.taskmaster.adapters.CartRecyclerViewAdapter;
+import com.hkimbrough22.taskmaster.models.CartItem;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public final static String SUBMITTED = "Submitted!";
-    public final static String TASK_EXTRA_STRING = "taskNum";
+    public final static String TASK_EXTRA_STRING = "taskName";
 
     protected static SharedPreferences sharedPref;
     protected static Resources resources;
+
+    //1. Add a RecyclerView to layout
+
+    //2. Grab the RecyclerView by ID
+
+    //3. Create and Set a linear layout manager for this RecyclerView
+
+    //4. Create new package (models), and Data model, create constructor
+
+    //4. Make a class whose sole purpose is to manage RecyclerViews (in new Adapters folder) should extends RecyclerView.Adapter
+    //Instantiate adapter below, pass in data model
+
+    //5. give recyclerviewadapter a constructor
+    //6. Make fragment package and blank fragment, design (convert fragment to different layout (constraint))!!!!
+
+    //7. Instatiate the fragment in Adapter
+
+    //8. Add class CartItemViewHolder in adapter at bottom
+    //9. change return to 20 or however much you need
+
+    //10. set adapter for the view
+
+    //11. give data
+
+
+
+
+
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        RecyclerView shoppingCartRecyclerView = findViewById(R.id.shoppingCartRecyclerView); //veritcal layout
+        RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
+        shoppingCartRecyclerView.setLayoutManager(lm);
+//        shoppingCarRecyclerView.setSoemthign
+        List<CartItem> cartItemList = new ArrayList<>();
+        cartItemList.add(new CartItem("Test", new Date()));
+        cartItemList.add(new CartItem("Test2", new Date()));
+        cartItemList.add(new CartItem("Test3", new Date()));
+        CartRecyclerViewAdapter cartRecyclerViewAdapter = new CartRecyclerViewAdapter(this, cartItemList); //"this" doesnt work at first, needs constructor with other info too
+        shoppingCartRecyclerView.setAdapter(cartRecyclerViewAdapter);
+
+
+
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         resources = getResources();

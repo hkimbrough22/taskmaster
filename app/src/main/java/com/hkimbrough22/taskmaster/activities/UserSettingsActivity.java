@@ -1,4 +1,4 @@
-package com.hkimbrough22.taskmaster;
+package com.hkimbrough22.taskmaster.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.hkimbrough22.taskmaster.R;
 
 public class UserSettingsActivity extends AppCompatActivity {
 
