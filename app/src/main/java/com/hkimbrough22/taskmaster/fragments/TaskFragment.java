@@ -12,13 +12,13 @@ import com.hkimbrough22.taskmaster.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CartItemFragment#newInstance} factory method to
+ * Use the {@link TaskFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CartItemFragment extends Fragment {
+public class TaskFragment extends Fragment {
 
 
-    public CartItemFragment() {
+    public TaskFragment() {
         // Required empty public constructor
     }
 
@@ -26,11 +26,11 @@ public class CartItemFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment CartItemFragment.
+     * @return A new instance of fragment TaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CartItemFragment newInstance() {
-        CartItemFragment fragment = new CartItemFragment();
+    public static TaskFragment newInstance() {
+        TaskFragment fragment = new TaskFragment();
         return fragment;
     }
 
@@ -44,6 +44,6 @@ public class CartItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart_item, container, false);
+        return inflater.inflate(R.layout.fragment_task, container, false);
     }
 }

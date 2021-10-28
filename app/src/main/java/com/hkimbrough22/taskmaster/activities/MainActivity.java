@@ -16,8 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hkimbrough22.taskmaster.R;
-import com.hkimbrough22.taskmaster.adapters.CartRecyclerViewAdapter;
-import com.hkimbrough22.taskmaster.models.CartItem;
+import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
+import com.hkimbrough22.taskmaster.models.Task;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +26,10 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     public final static String SUBMITTED = "Submitted!";
-    public final static String TASK_EXTRA_STRING = "taskName";
+    public final static String TASK_TITLE_EXTRA_STRING = "taskTitle";
+    public final static String TASK_BODY_EXTRA_STRING = "taskBody";
+    public final static String TASK_STATE_EXTRA_STRING = "taskState";
+    public final static String TASK_ADDED_ON_EXTRA_STRING = "taskAddedOn";
 
     protected static SharedPreferences sharedPref;
     protected static Resources resources;
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     //7. Instatiate the fragment in Adapter
 
-    //8. Add class CartItemViewHolder in adapter at bottom
+    //8. Add class TaskViewHolder in adapter at bottom
     //9. change return to 20 or however much you need
 
     //10. set adapter for the view
@@ -68,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView shoppingCartRecyclerView = findViewById(R.id.shoppingCartRecyclerView); //veritcal layout
+        RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
-        shoppingCartRecyclerView.setLayoutManager(lm);
+        taskListRecyclerView.setLayoutManager(lm);
 //        shoppingCarRecyclerView.setSoemthign
-        List<CartItem> cartItemList = new ArrayList<>();
-        cartItemList.add(new CartItem("Test", new Date()));
-        cartItemList.add(new CartItem("Test2", new Date()));
-        cartItemList.add(new CartItem("Test3", new Date()));
-        CartRecyclerViewAdapter cartRecyclerViewAdapter = new CartRecyclerViewAdapter(this, cartItemList); //"this" doesnt work at first, needs constructor with other info too
-        shoppingCartRecyclerView.setAdapter(cartRecyclerViewAdapter);
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("Test", "testBody", "new", new Date()));
+        taskList.add(new Task("Test2", "testBody2", "assigned", new Date()));
+        taskList.add(new Task("Test3", "testBody3", "complete", new Date()));
+        TaskListRecyclerViewAdapter taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList); //"this" doesnt work at first, needs constructor with other info too
+        taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
 
 
 
@@ -103,30 +106,30 @@ public class MainActivity extends AppCompatActivity {
             startActivity(userSettingsIntent);
         });
 
-        ImageView task1 = findViewById(R.id.homepageImageView);
-        ImageView task2 = findViewById(R.id.homepageImageView2);
-        ImageView task3 = findViewById(R.id.homepageImageView3);
-
-        task1.setOnClickListener(view -> {
-            TextView taskNum = findViewById(R.id.homepageTask1TitleTextView);
-            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-            taskDetailsIntent.putExtra(TASK_EXTRA_STRING, taskNum.getText());
-            startActivity(taskDetailsIntent);
-        });
-
-        task2.setOnClickListener(view -> {
-            TextView taskNum = findViewById(R.id.homepageTask2TitleTextView);
-            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-            taskDetailsIntent.putExtra(TASK_EXTRA_STRING, taskNum.getText());
-            startActivity(taskDetailsIntent);
-        });
-
-        task3.setOnClickListener(view -> {
-            TextView taskNum = findViewById(R.id.homepageTask3TitleTextView);
-            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
-            taskDetailsIntent.putExtra(TASK_EXTRA_STRING, taskNum.getText());
-            startActivity(taskDetailsIntent);
-        });
+//        ImageView task1 = findViewById(R.id.homepageImageView);
+//        ImageView task2 = findViewById(R.id.homepageImageView2);
+//        ImageView task3 = findViewById(R.id.homepageImageView3);
+//
+//        task1.setOnClickListener(view -> {
+//            TextView taskNum = findViewById(R.id.homepageTask1TitleTextView);
+//            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+//            taskDetailsIntent.putExtra(TASK_TITLE_EXTRA_STRING, taskNum.getText());
+//            startActivity(taskDetailsIntent);
+//        });
+//
+//        task2.setOnClickListener(view -> {
+//            TextView taskNum = findViewById(R.id.homepageTask2TitleTextView);
+//            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+//            taskDetailsIntent.putExtra(TASK_TITLE_EXTRA_STRING, taskNum.getText());
+//            startActivity(taskDetailsIntent);
+//        });
+//
+//        task3.setOnClickListener(view -> {
+//            TextView taskNum = findViewById(R.id.homepageTask3TitleTextView);
+//            Intent taskDetailsIntent = new Intent(MainActivity.this, TaskDetailsActivity.class);
+//            taskDetailsIntent.putExtra(TASK_TITLE_EXTRA_STRING, taskNum.getText());
+//            startActivity(taskDetailsIntent);
+//        });
 
     }
 

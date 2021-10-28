@@ -5,13 +5,13 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragments.CartItemFragment">
+    tools:context=".fragments.TaskFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/cartItemFragmentTextView"
+        android:id="@+id/taskFragmentTextView"
         android:layout_width="264dp"
-        android:layout_height="56dp"
+        android:layout_height="75dp"
         android:text="@string/hello_blank_fragment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
