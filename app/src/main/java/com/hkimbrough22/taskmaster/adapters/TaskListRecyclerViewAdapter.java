@@ -21,7 +21,6 @@ import com.hkimbrough22.taskmaster.models.Task;
 
 import java.util.List;
 
-//Step 4.
 public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRecyclerViewAdapter.TaskViewHolder> {
 
     AppCompatActivity associatedActivity;
@@ -33,7 +32,6 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
         this.taskList = taskList;
     }
 
-    //Step 7 here
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,7 +43,6 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-//        Change the data when the viewholder/fragments cycle
         Task task = taskList.get(position);
         View taskFragment = holder.itemView;
         TextView taskFragmentTextView = taskFragment.findViewById(R.id.taskFragmentTextView);
@@ -56,7 +53,7 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
             taskDetailsIntent.putExtra(TASK_TITLE_EXTRA_STRING, task.getTitle());
             taskDetailsIntent.putExtra(TASK_BODY_EXTRA_STRING, task.getBody());
             taskDetailsIntent.putExtra(TASK_STATE_EXTRA_STRING, task.getState());
-            taskDetailsIntent.putExtra(TASK_ADDED_ON_EXTRA_STRING, task.getAddedOn());
+//            taskDetailsIntent.putExtra(TASK_ADDED_ON_EXTRA_STRING, task.getAddedOn());
             associatedActivity.startActivity(taskDetailsIntent);
         });
     }
@@ -67,8 +64,6 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
         return taskList.size();
     }
 
-    //Step 8 here
-    //Step 11 here too
     public static class TaskViewHolder extends RecyclerView.ViewHolder{
         public Task task;
 

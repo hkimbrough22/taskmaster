@@ -17,6 +17,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
         Button addTaskButton = (Button) findViewById(R.id.addTaskSubmitButton);
         addTaskButton.setOnClickListener(view -> {
+
             TextView notificationTextView = findViewById(R.id.addTaskNotificationTextView);
             notificationTextView.setText(MainActivity.SUBMITTED);
         });

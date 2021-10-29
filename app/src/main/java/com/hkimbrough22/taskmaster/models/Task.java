@@ -1,17 +1,24 @@
 package com.hkimbrough22.taskmaster.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
+@Entity
 public class Task {
     protected String title;
     protected String body;
     protected String state;
-    protected Date addedOn;
+//    protected Date addedOn;
 
-    public Task(String title, String body, String state, Date addedOn) {
+    @PrimaryKey(autoGenerate = true)
+    public Long id;
+
+    public Task(String title, String body, String state) {
         this.title = title;
         this.body = body;
-        this.addedOn = addedOn;
+//        this.addedOn = addedOn;
         if(state == "new" || state == "assigned" || state == "in progress" || state == "complete"){
         this.state = state;
         } else throw new IllegalArgumentException("The state of your task must be \"new\", \"assigned\", \"in progress\", or \"complete\"!");
@@ -41,13 +48,13 @@ public class Task {
         this.state = state;
     }
 
-    public Date getAddedOn() {
-        return addedOn;
-    }
-
-    public void setAddedOn(Date addedOn) {
-        this.addedOn = addedOn;
-    }
+//    public Date getAddedOn() {
+//        return addedOn;
+//    }
+//
+//    public void setAddedOn(Date addedOn) {
+//        this.addedOn = addedOn;
+//    }
 
     @Override
     public String toString() {
