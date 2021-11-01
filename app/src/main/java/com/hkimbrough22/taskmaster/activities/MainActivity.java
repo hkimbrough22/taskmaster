@@ -5,7 +5,6 @@ import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.USER_U
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,11 +17,9 @@ import android.widget.TextView;
 
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
-import com.hkimbrough22.taskmaster.database.TaskmasterDatabase;
 import com.hkimbrough22.taskmaster.models.Task;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,33 +33,29 @@ public class MainActivity extends AppCompatActivity {
 
     protected static SharedPreferences sharedPref;
     protected static Resources resources;
-    TaskmasterDatabase taskmasterDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        taskmasterDatabase = Room.databaseBuilder(getApplicationContext(), TaskmasterDatabase.class, DATABASE_NAME)
-                .allowMainThreadQueries()
-            .build();
 
         RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         taskListRecyclerView.setLayoutManager(lm);
-        List<Task> taskList = taskmasterDatabase.taskDao().findAll();
-//        taskList.add(new Task("Test", "testBody", "new", new Date()));
-//        taskList.add(new Task("Test2", "testBody2", "assigned", new Date()));
-//        taskList.add(new Task("Test3", "testBody3", "complete", new Date()));
-//        taskList.add(new Task("Test1", "testBody", "new", new Date()));
-//        taskList.add(new Task("Test12", "testBody2", "assigned", new Date()));
-//        taskList.add(new Task("Test13", "testBody3", "complete", new Date()));
-//        taskList.add(new Task("Test2", "testBody", "new", new Date()));
-//        taskList.add(new Task("Test22", "testBody2", "assigned", new Date()));
-//        taskList.add(new Task("Test23", "testBody3", "complete", new Date()));
-//        taskList.add(new Task("Test3", "testBody", "new", new Date()));
-//        taskList.add(new Task("Test32", "testBody2", "assigned", new Date()));
-//        taskList.add(new Task("Test33", "testBody3", "complete", new Date()));
+       List<Task> taskList = new ArrayList<>();
+        taskList.add(new Task("Test", "testBody", "new"));
+        taskList.add(new Task("Test2", "testBody2", "assigned"));
+        taskList.add(new Task("Test3", "testBody3", "complete"));
+        taskList.add(new Task("Test1", "testBody", "new"));
+        taskList.add(new Task("Test12", "testBody2", "assigned"));
+        taskList.add(new Task("Test13", "testBody3", "complete"));
+        taskList.add(new Task("Test2", "testBody", "new"));
+        taskList.add(new Task("Test22", "testBody2", "assigned"));
+        taskList.add(new Task("Test23", "testBody3", "complete"));
+        taskList.add(new Task("Test3", "testBody", "new"));
+        taskList.add(new Task("Test32", "testBody2", "assigned"));
+        taskList.add(new Task("Test33", "testBody3", "complete"));
         TaskListRecyclerViewAdapter taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList); //"this" doesnt work at first, needs constructor with other info too
         taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
 
