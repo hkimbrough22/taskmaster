@@ -1,18 +1,11 @@
 package com.hkimbrough22.taskmaster.models;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import java.util.Date;
-
-@Entity
 public class Task {
     protected String title;
     protected String body;
     protected String state;
 //    protected Date addedOn;
 
-    @PrimaryKey(autoGenerate = true)
     public Long id;
 
     public Task(String title, String body, String state) {

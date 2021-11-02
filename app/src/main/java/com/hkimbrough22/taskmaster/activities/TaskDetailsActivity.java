@@ -20,7 +20,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         String taskTitle = intent.getExtras().get(MainActivity.TASK_TITLE_EXTRA_STRING).toString();
         String taskBody = intent.getExtras().get(MainActivity.TASK_BODY_EXTRA_STRING).toString();
         String taskState = intent.getExtras().get(MainActivity.TASK_STATE_EXTRA_STRING).toString();
-        String taskAddedOn = intent.getExtras().get(MainActivity.TASK_ADDED_ON_EXTRA_STRING).toString();
+//        String taskAddedOn = intent.getExtras().get(MainActivity.TASK_ADDED_ON_EXTRA_STRING).toString();
 
         TextView taskTitleTextView = findViewById(R.id.taskDetailsTitleTextView);
         taskTitleTextView.setText(taskTitle);
@@ -28,7 +28,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         taskBodyEditText.setText(taskBody);
         TextView taskStateTextView = findViewById(R.id.taskStateTextView);
         taskStateTextView.setText(taskState);
-        TextView taskAddedOnTextView = findViewById(R.id.taskAddedOnTextView);
-        taskAddedOnTextView.setText(taskAddedOn);
+//        TextView taskAddedOnTextView = findViewById(R.id.taskAddedOnTextView);
+//        taskAddedOnTextView.setText(taskAddedOn);
     }
 }
