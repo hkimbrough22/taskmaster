@@ -17,10 +17,10 @@ Application is an android application programmed using the Java language. Tested
 
 ![homepage screenshot](./screenshots/myTasks.png)
 - The main page should have a heading at the top of the page and buttons at the bottom of the page to allow going to the “add tasks” and “all tasks” page.
-- Additionally, it contains a RecyclerView that displays a user's tasks (currently hard-coded).
-- When a user taps one of the tasks, it should go to the Task Detail page, and the task title, body, state, and addedOn should match the task that was tapped on the previous page.
+- Additionally, it contains a RecyclerView that displays a user's tasks pulled from DynamoDB.
+- When a user taps one of the tasks, it should go to the Task Detail page, and the task title, body, and state should match the task that was tapped on the previous page.
 - Also, an wrench image allows users to visit the Settings page, and once the user has entered their username, it should display “{username}’s tasks” above the three task buttons.
-- The application has a Task class. A Task should have a title, a body, and a state. The state should be one of “new”, “assigned”, “in progress”, or “complete”.
+- The application has a Task class. A Task should have a title, a body, and a state. The state should be one of “new”, “assigned”, “in progress”, or “complete” (still needs to be implemented).
 
 
 ### Add Task
@@ -29,7 +29,9 @@ Application is an android application programmed using the Java language. Tested
 ![add task submitted screenshot](./screenshots/addTaskSubmitted.png)
 
 
-- On the “Add a Task” page, allow users to type in details about a new task, specifically a title and a body. When users click the “submit” button, show a “submitted!” label on the page.
+- On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, and status.
+- When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
+- Also redirects user to Homepage and updates list there with new Task.
 
 
 ### All Tasks
@@ -115,6 +117,17 @@ Application is an android application programmed using the Java language. Tested
       - tap on a task, and assert that the resulting activity displays the name of that task 
       - edit the user’s username, and assert that it updates on the homepage
 
+### Day 6
+#### Task for the Day
+1. Amplify 
+   - Creates a Task resource that replicates our existing Task schema. 
+   - Update all references to the Task data to instead use AWS Amplify to access your data in DynamoDB instead of in Room.
+   
+2. Add Task Form
+   - Modifies Add Task form to save the data entered in as a Task to DynamoDB.
+
+3. Homepage
+   - Refactors Homepage RecyclerView to display Tasks entities from DynamoDB.
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->

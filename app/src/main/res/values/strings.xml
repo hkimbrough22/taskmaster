@@ -17,4 +17,7 @@
     <string name="UsernameTasks">%1$s\'s Tasks</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="taskState">Status: New, In progress, Complete, Unknown</string>
+    <string name="taskAdded">Task Added!</string>
+    <string name="invalidStatus">Your status must be \"New\", \"In Progress\", \"Complete\", or \"Unknown\"</string>
 </resources>

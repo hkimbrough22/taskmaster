@@ -1,6 +1,5 @@
 package com.hkimbrough22.taskmaster.adapters;
 
-import static com.hkimbrough22.taskmaster.activities.MainActivity.TASK_ADDED_ON_EXTRA_STRING;
 import static com.hkimbrough22.taskmaster.activities.MainActivity.TASK_BODY_EXTRA_STRING;
 import static com.hkimbrough22.taskmaster.activities.MainActivity.TASK_STATE_EXTRA_STRING;
 import static com.hkimbrough22.taskmaster.activities.MainActivity.TASK_TITLE_EXTRA_STRING;
@@ -15,9 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amplifyframework.datastore.generated.model.Task;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.activities.TaskDetailsActivity;
-import com.hkimbrough22.taskmaster.models.Task;
 
 import java.util.List;
 
@@ -29,6 +28,14 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
 
     public TaskListRecyclerViewAdapter(AppCompatActivity associatedActivity, List<Task> taskList){
         this.associatedActivity = associatedActivity;
+        this.taskList = taskList;
+    }
+
+    public List<Task> getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
     }
 
