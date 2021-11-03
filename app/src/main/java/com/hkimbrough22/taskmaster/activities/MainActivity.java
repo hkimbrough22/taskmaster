@@ -1,6 +1,9 @@
 package com.hkimbrough22.taskmaster.activities;
 
+import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.TAG;
 import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.USER_USERNAME_KEY;
+
+import static java.util.stream.Collectors.toList;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,16 +14,22 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amplifyframework.api.graphql.PaginatedResult;
+import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
-import com.hkimbrough22.taskmaster.models.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     protected static SharedPreferences sharedPref;
     protected static Resources resources;
 
+    TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,22 +54,28 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         taskListRecyclerView.setLayoutManager(lm);
-       List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task("Test", "testBody", "new"));
-        taskList.add(new Task("Test2", "testBody2", "assigned"));
-        taskList.add(new Task("Test3", "testBody3", "complete"));
-        taskList.add(new Task("Test1", "testBody", "new"));
-        taskList.add(new Task("Test12", "testBody2", "assigned"));
-        taskList.add(new Task("Test13", "testBody3", "complete"));
-        taskList.add(new Task("Test2", "testBody", "new"));
-        taskList.add(new Task("Test22", "testBody2", "assigned"));
-        taskList.add(new Task("Test23", "testBody3", "complete"));
-        taskList.add(new Task("Test3", "testBody", "new"));
-        taskList.add(new Task("Test32", "testBody2", "assigned"));
-        taskList.add(new Task("Test33", "testBody3", "complete"));
-        TaskListRecyclerViewAdapter taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList); //"this" doesnt work at first, needs constructor with other info too
-        taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
+        Amplify.API.query(
+                ModelQuery.list(Task.class),
+                success -> {
+                    List<Task> taskList = new ArrayList<>();
+                    for (Task task : success.getData()) {
+                        taskList.add(task);
+                        Log.i(TAG, "Succeeded in adding to view: " + task.getTitle());
+                    }
+//                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
+                    runOnUiThread(() -> {
+                        taskListRecyclerViewAdapter.setTaskList(taskList);
+                        taskListRecyclerViewAdapter.notifyDataSetChanged();
+                    });
+                },
+                failure -> {
+                    Log.i(TAG, "failed");
+                }
+        );
 
+        List<Task> taskList = new ArrayList<>();
+        taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList);
+        taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         resources = getResources();
@@ -84,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
 
         String userName = sharedPref.getString(USER_USERNAME_KEY, "");
-        if(!userName.equals("")){
+        if (!userName.equals("")) {
             ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userName));
         }
 
