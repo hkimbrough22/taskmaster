@@ -24,11 +24,14 @@ import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String TASK_STATE_EXTRA_STRING = "taskState";
     public final static String TASK_ADDED_ON_EXTRA_STRING = "taskAddedOn";
     public final static String DATABASE_NAME = "hkim_taskmaster_db";
+    public final static String TEAM_UNKNOWN_NAME = "Team Unknown";
 
     protected static SharedPreferences sharedPref;
     protected static Resources resources;
@@ -49,6 +53,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Team newTeam = Team.builder()
+                .name("Team 2")
+                .build();
+        Amplify.API.mutate(
+                ModelMutation.create(newTeam),
+                success -> Log.i(TAG, "succeeded"),
+                failure -> Log.i(TAG, "failed")
+        );
+
+        Task newTask = Task.builder()
+                .title("testTitle1")
+                .team(newTeam)
+                .body("testBody1")
+                .state("testState1")
+                .build();
+        Amplify.API.mutate(
+                ModelMutation.create(newTask),
+                success -> Log.i(TAG, "succeeded"),
+                failure -> Log.i(TAG, "failed")
+        );
 
 
         RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
@@ -76,6 +101,35 @@ public class MainActivity extends AppCompatActivity {
         List<Task> taskList = new ArrayList<>();
         taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList);
         taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
+        CompletableFuture<Team> teamCompletableFuture = new CompletableFuture<>();
+        Amplify.API.query(
+                ModelQuery.list(Team.class),
+                success -> {
+                    List<Task> teamList = new ArrayList<>();
+                    for (Team team : success.getData()) {
+                        if(team.getName().equals(TEAM_UNKNOWN_NAME)){
+                            teamCompletableFuture.complete(team);
+                        Log.i(TAG, "Succeeded in adding to view: " + team.getName());
+                        }
+                    }
+//                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
+                    runOnUiThread(() -> {
+                        taskListRecyclerViewAdapter.setTaskList(taskList);
+                        taskListRecyclerViewAdapter.notifyDataSetChanged();
+                    });
+                },
+                failure -> {
+                    Log.i(TAG, "failed");
+                }
+        );
+
+        try {
+            Team teamUnknown = teamCompletableFuture.get();// 180-ish of code  and pass to creating new task.
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         resources = getResources();
