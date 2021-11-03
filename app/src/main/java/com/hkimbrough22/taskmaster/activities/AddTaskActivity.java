@@ -17,6 +17,8 @@ import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.hkimbrough22.taskmaster.R;
 
+import java.util.Locale;
+
 public class AddTaskActivity extends AppCompatActivity {
 
     @Override
@@ -30,19 +32,27 @@ public class AddTaskActivity extends AppCompatActivity {
             EditText taskTitle = findViewById(R.id.addTaskTitleEditText);
             EditText taskBody = findViewById(R.id.addTaskDescriptionEditText);
             EditText taskStatus = findViewById(R.id.addTaskStateEditText);
-            Task newTask = Task.builder()
-                    .title(taskTitle.getText().toString())
-                    .body(taskBody.getText().toString())
-                    .state(taskStatus.getText().toString())
-                    .build();
-            Amplify.API.mutate(
-                    ModelMutation.create(newTask),
-                    success -> Log.i(TAG, "succeeded"),
-                    failure -> Log.i(TAG, "failed")
-            );
-            Toast.makeText(this, R.string.taskAdded, Toast.LENGTH_SHORT).show();
-            Intent mainActivityIntent = new Intent(AddTaskActivity.this, MainActivity.class);
-            startActivity(mainActivityIntent);
+//            String taskStatusLower = taskStatus.getText().toString().toLowerCase();
+//            if (!taskStatusLower.equals("new") ||
+//                    !taskStatusLower.equals("in progress") ||
+//                    !taskStatusLower.equals("complete") ||
+//                    !taskStatusLower.equals("unknown")) {
+//                Toast.makeText(this, R.string.invalidStatus, Toast.LENGTH_LONG).show();
+//            } else {
+                Task newTask = Task.builder()
+                        .title(taskTitle.getText().toString())
+                        .body(taskBody.getText().toString())
+                        .state(taskStatus.getText().toString())
+                        .build();
+                Amplify.API.mutate(
+                        ModelMutation.create(newTask),
+                        success -> Log.i(TAG, "succeeded"),
+                        failure -> Log.i(TAG, "failed")
+                );
+                Toast.makeText(this, R.string.taskAdded, Toast.LENGTH_SHORT).show();
+                Intent mainActivityIntent = new Intent(AddTaskActivity.this, MainActivity.class);
+                startActivity(mainActivityIntent);
+//            }
         });
     }
 }

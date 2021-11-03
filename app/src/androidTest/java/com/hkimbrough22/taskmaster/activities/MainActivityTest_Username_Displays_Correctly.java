@@ -1,8 +1,7 @@
-package com.hkimbrough22.taskmaster;
+package com.hkimbrough22.taskmaster.activities;
 
 
 import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -22,7 +21,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
-import com.hkimbrough22.taskmaster.activities.MainActivity;
+import com.hkimbrough22.taskmaster.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -33,60 +32,22 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class learningMainActivityTest {
+public class MainActivityTest_Username_Displays_Correctly {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void learningMainActivityTest() {
+    public void mainActivityTest_Username_Displays_Correctly() {
         ViewInteraction appCompatImageView = onView(
-                allOf(withId(R.id.homepageImageView),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        appCompatImageView.perform(click());
-
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.taskDetailsTitleTextView), withText("Task 1"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView.check(matches(withText("Task 1")));
-
-        pressBack();
-
-        pressBack();
-
-        ViewInteraction appCompatImageView2 = onView(
-                allOf(withId(R.id.homepageImageView2),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                2),
-                        isDisplayed()));
-        appCompatImageView2.perform(click());
-
-        ViewInteraction textView2 = onView(
-                allOf(withId(R.id.taskDetailsTitleTextView), withText("Task 2"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView2.check(matches(withText("Task 2")));
-
-        pressBack();
-
-        ViewInteraction appCompatImageView3 = onView(
                 allOf(withId(R.id.userSettingsImageView),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                6),
+                                3),
                         isDisplayed()));
-        appCompatImageView3.perform(click());
+        appCompatImageView.perform(click());
 
         ViewInteraction appCompatEditText = onView(
                 allOf(withId(R.id.userSettingsUsernameEditText),
@@ -108,11 +69,11 @@ public class learningMainActivityTest {
                         isDisplayed()));
         materialButton.perform(click());
 
-        ViewInteraction textView3 = onView(
+        ViewInteraction textView = onView(
                 allOf(withId(R.id.homepageTitleTextView), withText("Haustin's Tasks"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
-        textView3.check(matches(withText("Haustin's Tasks")));
+        textView.check(matches(withText("Haustin's Tasks")));
     }
 
     private static Matcher<View> childAtPosition(
