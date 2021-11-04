@@ -7,17 +7,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
+import com.amplifyframework.datastore.generated.model.Team;
 import com.hkimbrough22.taskmaster.R;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class AddTaskActivity extends AppCompatActivity {
 
@@ -32,6 +37,34 @@ public class AddTaskActivity extends AppCompatActivity {
             EditText taskTitle = findViewById(R.id.addTaskTitleEditText);
             EditText taskBody = findViewById(R.id.addTaskDescriptionEditText);
             EditText taskStatus = findViewById(R.id.addTaskStateEditText);
+            Spinner teamSpinner = findViewById(R.id.addTaskTeamSpinner);
+            String teamSpinnerString = teamSpinner.getSelectedItem().toString();
+            // take teamString and do query to DB for team
+            // take team and use that for taskbuilder below
+            CompletableFuture<Team> teamCompletableFuture = new CompletableFuture<>();
+
+            List<String> teamNames = new ArrayList<>();
+            Amplify.API.query(
+                    ModelQuery.list(Team.class),
+                    success -> {
+                        Team selectedTeam = null;
+                        if(success.hasData()){
+                            for(Team team : success.getData()){
+                                if(team.getName().equals(teamSpinnerString)){
+                                    selectedTeam = team;
+                                }
+                                teamNames.add(team.getName());
+                            }
+                        }
+//                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
+                    },
+                    failure -> {
+                        Log.i(TAG, "failed");
+                    }
+            );
+
+            teamSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, teamNames));
+
 //            String taskStatusLower = taskStatus.getText().toString().toLowerCase();
 //            if (!taskStatusLower.equals("new") ||
 //                    !taskStatusLower.equals("in progress") ||
@@ -41,6 +74,7 @@ public class AddTaskActivity extends AppCompatActivity {
 //            } else {
                 Task newTask = Task.builder()
                         .title(taskTitle.getText().toString())
+                        .team()
                         .body(taskBody.getText().toString())
                         .state(taskStatus.getText().toString())
                         .build();
@@ -54,5 +88,13 @@ public class AddTaskActivity extends AppCompatActivity {
                 startActivity(mainActivityIntent);
 //            }
         });
+    }
+
+    public int getSpinnerIndex(Spinner spinner, String selection){
+        for(int i=0; i < spinner.getCount(); i++){
+            if(spinner.getItemAtPosition(i).toString().equalsIgnoreCase(selection)){
+                return i;
+            }
+        }
     }
 }
