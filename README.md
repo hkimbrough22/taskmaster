@@ -19,10 +19,11 @@ Application is an android application programmed using the Java language. Tested
 
 ![homepage screenshot](./screenshots/myTasks.png)
 - The main page should have a heading at the top of the page and buttons at the bottom of the page to allow going to the “add tasks” and “all tasks” page.
-- Additionally, it contains a RecyclerView that displays a user's tasks pulled from DynamoDB.
+- Additionally, it contains a RecyclerView that displays a user's specific team's tasks pulled from DynamoDB, sorted in order of creation with the most recent at the top.
 - When a user taps one of the tasks, it should go to the Task Detail page, and the task title, body, and state should match the task that was tapped on the previous page.
-- Also, an wrench image allows users to visit the Settings page, and once the user has entered their username, it should display “{username}’s tasks” above the three task buttons.
-- The application has a Task class. A Task should have a title, a body, and a state. The state should be one of “new”, “assigned”, “in progress”, or “complete” (still needs to be implemented).
+- Also, an wrench image allows users to visit the Settings page, and once the user has entered their username and/or team, it should display “{username}’s tasks” and "Team X" above the three task buttons.
+- The application has a Task entity. A Task should have a title, a body, and a state. The state should be one of “new”, “assigned”, “in progress”, or “complete” (still needs to be implemented).
+- The application has a Team entity. A Team owns many tasks. A team has a name.
 
 
 ### Add Task
@@ -31,9 +32,9 @@ Application is an android application programmed using the Java language. Tested
 ![add task submitted screenshot](./screenshots/addTaskSubmitted.png)
 
 
-- On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, and status.
+- On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, status, and assign a team.
 - When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
-- Also redirects user to Homepage and updates list there with new Task.
+- Also redirects user to Homepage and updates list there with new Task if the task created was apart of the user's selected Team.
 
 
 ### All Tasks
@@ -41,23 +42,24 @@ Application is an android application programmed using the Java language. Tested
 ![all tasks screenshot](./screenshots/allTasks.png)
 
 
-- The all tasks page should just be an image with a back button; it needs no functionality.
+- The all tasks page should just be an image with a back button; it has no functionality.
 
 
-### Settings Screenshot
+### Settings
 
 ![Settings screenshot](./screenshots/userSettings.png)
 
 
-- Settings page. It should allow users to enter their username and hit save.
+- Allow users to enter their username and/or select a team and then save.
+- Saved usernames and teams will display on homepage.
 
 
-### Task Detail Screenshot
+### Task Detail
 
 ![task detail screenshot](screenshots/taskDetails.png)
 
 
-- Task Detail page should have a title at the top of the page, and a Lorem Ipsum description.
+- Should have a title at the top of the page, a description, and status.
 
 ## Daily Changelog
 ### Day 1
@@ -130,6 +132,25 @@ Application is an android application programmed using the Java language. Tested
 
 3. Homepage
    - Refactors Homepage RecyclerView to display Tasks entities from DynamoDB.
+
+### Day 7
+#### Task for the Day
+1. Teams
+   - Creates a second entity, Team, which has a name and a list of tasks. 
+   - Updates tasks to be owned by a team.
+   - Manually created three teams (User cannot create new teams.)
+
+2. Add Task Form
+   - Modifies Add Task form to include a Spinner for which team that task belongs to.
+   
+3. Settings Page
+   - In addition to a username, allows the user to choose their team. 
+   - Uses that Team to display only that team’s tasks on the homepage.
+   
+4. Homepage
+   - TODO:
+     - Add functionality that will not show any tasks if the user has not selected their team.
+     - Clean up display of tasks.
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
