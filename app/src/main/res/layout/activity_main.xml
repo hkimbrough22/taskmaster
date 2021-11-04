@@ -10,15 +10,15 @@
         android:id="@+id/homepageTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="36dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="596dp"
         android:text="@string/myTasksTitle"
         android:textColor="#000000"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/homepageTeamNameTextView"
+        app:layout_constraintVertical_bias="0.48" />
 
     <Button
         android:id="@+id/homepageAddTaskButton"
@@ -55,11 +55,24 @@
         android:id="@+id/taskListRecyclerView"
         android:layout_width="319dp"
         android:layout_height="457dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homepageTitleTextView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.63" />
+
+    <TextView
+        android:id="@+id/homepageTeamNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/userSettingsImageView"
+        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Team Name goes here" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

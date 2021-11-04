@@ -1,6 +1,7 @@
 package com.hkimbrough22.taskmaster.activities;
 
 import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.TAG;
+import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.USER_TEAM_KEY;
 import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.USER_USERNAME_KEY;
 
 import static java.util.stream.Collectors.toList;
@@ -29,6 +30,7 @@ import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -53,85 +55,51 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        resources = getResources();
 
-//        Team newTeam = Team.builder()
-//                .name("Team 3")
-//                .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(newTeam),
-//                success -> Log.i(TAG, "succeeded"),
-//                failure -> Log.i(TAG, "failed")
-//        );
-
-//        Task newTask = Task.builder()
-//                .title("testTitle1")
-//                .team(newTeam)
-//                .body("testBody1")
-//                .state("testState1")
-//                .build();
-//        Amplify.API.mutate(
-//                ModelMutation.create(newTask),
-//                success -> Log.i(TAG, "succeeded"),
-//                failure -> Log.i(TAG, "failed")
-//        );
-
-        CompletableFuture<Team> teamCompletableFuture = new CompletableFuture<>();
+        CompletableFuture<List<Task>> taskCompletableFuture = new CompletableFuture<>();
 
         RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
         taskListRecyclerView.setLayoutManager(lm);
+
+        String teamName = sharedPref.getString(USER_TEAM_KEY, "");
         Amplify.API.query(
                 ModelQuery.list(Task.class),
                 success -> {
                     List<Task> taskList = new ArrayList<>();
                     for (Task task : success.getData()) {
-                        taskList.add(task);
+                        if(task.getTeam().getName().equals(teamName)){
+                            taskList.add(task);
+                        }
                         Log.i(TAG, "Succeeded in adding to view: " + task.getTitle());
                     }
+                            Collections.sort(taskList, (o1, o2) ->
+                                    -o1.getCreatedAt().compareTo(o2.getCreatedAt()));
+
+//                    (o1, o2) -> o1.getCreatedAt().compareTo(o2.getCreatedAt()));
+                            taskCompletableFuture.complete(taskList);
 //                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
-                    runOnUiThread(() -> {
-                        taskListRecyclerViewAdapter.setTaskList(taskList);
-                        taskListRecyclerViewAdapter.notifyDataSetChanged();
-                    });
                 },
                 failure -> {
                     Log.i(TAG, "failed");
                 }
         );
 
-        List<Task> taskList = new ArrayList<>();
-        taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList);
+        List<Task> userTeamTasks = null;
+        try {
+            userTeamTasks = taskCompletableFuture.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, userTeamTasks);
+        taskListRecyclerViewAdapter.notifyDataSetChanged();
         taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
-        Amplify.API.query(
-                ModelQuery.list(Task.class),
-                success -> {
-                    for (Task task : success.getData()) {
-//                            teamCompletableFuture.complete(team);
-                        taskList.add(task);
-                        Log.i(TAG, "Succeeded in adding to view: " + task.getTitle());
-                    }
-//                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
-                    runOnUiThread(() -> {
-                        taskListRecyclerViewAdapter.setTaskList(taskList);
-                        taskListRecyclerViewAdapter.notifyDataSetChanged();
-                    });
-                    teamCompletableFuture.complete()
-                },
-                failure -> {
-                    Log.i(TAG, "failed");
-                }
-        );
 
-//        try {
-//            Team teamUnknown = teamCompletableFuture.get();// 180-ish of code  and pass to creating new task.
-//        } catch (ExecutionException e) {
-//            e.printStackTrace();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        resources = getResources();
 
         Button addTaskButton = findViewById(R.id.homepageAddTaskButton);
         addTaskButton.setOnClickListener(view -> {
@@ -158,9 +126,15 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         String userName = sharedPref.getString(USER_USERNAME_KEY, "");
+        String teamName = sharedPref.getString(USER_TEAM_KEY, "");
         if (!userName.equals("")) {
             ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userName));
         }
+        if(!teamName.equals("")){
+            ((TextView) findViewById(R.id.homepageTeamNameTextView)).setText(teamName);
+        }
 
     }
+
+    //TODO: Put the logic for getting the correct taskList  into a function and call in onCreate and onResume
 }
