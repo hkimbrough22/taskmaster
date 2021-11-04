@@ -54,27 +54,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Team newTeam = Team.builder()
-                .name("Team 2")
-                .build();
-        Amplify.API.mutate(
-                ModelMutation.create(newTeam),
-                success -> Log.i(TAG, "succeeded"),
-                failure -> Log.i(TAG, "failed")
-        );
+//        Team newTeam = Team.builder()
+//                .name("Team 3")
+//                .build();
+//        Amplify.API.mutate(
+//                ModelMutation.create(newTeam),
+//                success -> Log.i(TAG, "succeeded"),
+//                failure -> Log.i(TAG, "failed")
+//        );
 
-        Task newTask = Task.builder()
-                .title("testTitle1")
-                .team(newTeam)
-                .body("testBody1")
-                .state("testState1")
-                .build();
-        Amplify.API.mutate(
-                ModelMutation.create(newTask),
-                success -> Log.i(TAG, "succeeded"),
-                failure -> Log.i(TAG, "failed")
-        );
+//        Task newTask = Task.builder()
+//                .title("testTitle1")
+//                .team(newTeam)
+//                .body("testBody1")
+//                .state("testState1")
+//                .build();
+//        Amplify.API.mutate(
+//                ModelMutation.create(newTask),
+//                success -> Log.i(TAG, "succeeded"),
+//                failure -> Log.i(TAG, "failed")
+//        );
 
+        CompletableFuture<Team> teamCompletableFuture = new CompletableFuture<>();
 
         RecyclerView taskListRecyclerView = findViewById(R.id.taskListRecyclerView); //veritcal layout
         RecyclerView.LayoutManager lm = new LinearLayoutManager(this);
@@ -101,35 +102,33 @@ public class MainActivity extends AppCompatActivity {
         List<Task> taskList = new ArrayList<>();
         taskListRecyclerViewAdapter = new TaskListRecyclerViewAdapter(this, taskList);
         taskListRecyclerView.setAdapter(taskListRecyclerViewAdapter);
-        CompletableFuture<Team> teamCompletableFuture = new CompletableFuture<>();
         Amplify.API.query(
-                ModelQuery.list(Team.class),
+                ModelQuery.list(Task.class),
                 success -> {
-                    List<Task> teamList = new ArrayList<>();
-                    for (Team team : success.getData()) {
-                        if(team.getName().equals(TEAM_UNKNOWN_NAME)){
-                            teamCompletableFuture.complete(team);
-                        Log.i(TAG, "Succeeded in adding to view: " + team.getName());
-                        }
+                    for (Task task : success.getData()) {
+//                            teamCompletableFuture.complete(team);
+                        taskList.add(task);
+                        Log.i(TAG, "Succeeded in adding to view: " + task.getTitle());
                     }
 //                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
                     runOnUiThread(() -> {
                         taskListRecyclerViewAdapter.setTaskList(taskList);
                         taskListRecyclerViewAdapter.notifyDataSetChanged();
                     });
+                    teamCompletableFuture.complete()
                 },
                 failure -> {
                     Log.i(TAG, "failed");
                 }
         );
 
-        try {
-            Team teamUnknown = teamCompletableFuture.get();// 180-ish of code  and pass to creating new task.
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Team teamUnknown = teamCompletableFuture.get();// 180-ish of code  and pass to creating new task.
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         resources = getResources();

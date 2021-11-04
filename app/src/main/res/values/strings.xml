@@ -20,4 +20,5 @@
     <string name="taskState">Status: New, In progress, Complete, Unknown</string>
     <string name="taskAdded">Task Added!</string>
     <string name="invalidStatus">Your status must be \"New\", \"In Progress\", \"Complete\", or \"Unknown\"</string>
+    <string name="teamName">Team</string>
 </resources>
