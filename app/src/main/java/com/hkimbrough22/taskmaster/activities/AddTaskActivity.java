@@ -21,6 +21,8 @@ import com.amplifyframework.datastore.generated.model.Team;
 import com.hkimbrough22.taskmaster.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -71,6 +73,7 @@ public class AddTaskActivity extends AppCompatActivity {
         for(Team team : teams1){
             teamNames.add(team.getName());
         }
+        teamNames.sort(Comparator.naturalOrder());
         teamSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, teamNames));
         List<Team> teams2 = teams1;
 
