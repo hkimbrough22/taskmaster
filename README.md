@@ -152,6 +152,15 @@ Application is an android application programmed using the Java language. Tested
      - Add functionality that will not show any tasks if the user has not selected their team.
      - Clean up display of tasks.
 
+### Day 8
+#### Task for the Day
+1. Build Final APK
+   - Added release directory with app-release.aab to file system for deploying to Google Play Store.
+   - Couldn't get the link copied from Console to paste/take me to where I could internally test/download my app.
+   - Everytime I copied link and pasted, it would just refresh the page I was on.
+   - Should be up-to-date otherwise.
+   - Unsure if a new/updated APK is needed at this point, but I'll build one anyways.
+
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
 
