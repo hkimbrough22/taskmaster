@@ -10,15 +10,14 @@
         android:id="@+id/homepageTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="596dp"
+        android:layout_marginTop="24dp"
         android:text="@string/myTasksTitle"
         android:textColor="#000000"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homepageTeamNameTextView"
-        app:layout_constraintVertical_bias="0.48" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homepageTeamNameTextView" />
 
     <Button
         android:id="@+id/homepageAddTaskButton"
@@ -28,51 +27,61 @@
         android:text="@string/addTask"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView"
+        app:layout_constraintVertical_bias="0.217" />
 
     <Button
         android:id="@+id/homepageAllTasksButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="52dp"
         android:text="@string/allTasks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/taskListRecyclerView"
+        app:layout_constraintVertical_bias="0.224" />
 
     <ImageView
         android:id="@+id/userSettingsImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/homepageTitleTextView"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskListRecyclerView"
-        android:layout_width="319dp"
-        android:layout_height="457dp"
-        android:layout_marginBottom="120dp"
+        android:layout_width="314dp"
+        android:layout_height="388dp"
+        android:layout_marginBottom="140dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homepageTitleTextView"
-        app:layout_constraintVertical_bias="0.63" />
+        app:layout_constraintVertical_bias="0.139" />
 
     <TextView
         android:id="@+id/homepageTeamNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_width="145dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/userSettingsImageView"
-        app:layout_constraintHorizontal_bias="0.032"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/userSettingsImageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Team Name goes here" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.369"
+        app:layout_constraintStart_toEndOf="@+id/homepageTeamNameTextView"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
