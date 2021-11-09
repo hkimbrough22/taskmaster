@@ -15,9 +15,24 @@ An application to manage tasks.
 
 Application is an android application programmed using the Java language. Tested using Espresso.
 
+### Login
+- First page a user is directed to.
+- Offers user chance to click "Signup" button if no account has been created yet.
+![Login Page](./screenshots/login.png)
+
+### Signup
+- Allows user to fill out username and password to sign up.
+- If successful, redirects to verification page and sends email to user's email.
+![Signup Page](./screenshots/signup.png)
+
+### Verify
+- Allows user to enter verification code sent to email.
+- If correct username and code is entered, redirects to login page.
+![Verify Page](./screenshots/verify.png)
+
 ### Homepage
 
-![homepage screenshot](./screenshots/myTasks.png)
+![homepage screenshot](screenshots/homepage.png)
 - The main page should have a heading at the top of the page and buttons at the bottom of the page to allow going to the “add tasks” and “all tasks” page.
 - Additionally, it contains a RecyclerView that displays a user's specific team's tasks pulled from DynamoDB, sorted in order of creation with the most recent at the top.
 - When a user taps one of the tasks, it should go to the Task Detail page, and the task title, body, and state should match the task that was tapped on the previous page.
@@ -160,6 +175,19 @@ Application is an android application programmed using the Java language. Tested
    - Everytime I copied link and pasted, it would just refresh the page I was on.
    - Should be up-to-date otherwise.
    - Unsure if a new/updated APK is needed at this point, but I'll build one anyways.
+
+### Day 9
+#### Task for the Day
+1. Cognito
+   - Adds Cognito to application
+   - Adds user login page and functionality
+   - Adds user signup page and functionality
+   - Adds user verify page and functionality
+   - Adds logout button and functionality
+   
+2. Homepage
+   - Updates homepage title with user's username
+   - Intend to update so that if a user sets a nickname in usersettings, it will override username display.
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
