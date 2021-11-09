@@ -21,4 +21,13 @@
     <string name="taskAdded">Task Added!</string>
     <string name="invalidStatus">Your status must be \"New\", \"In Progress\", \"Complete\", or \"Unknown\"</string>
     <string name="teamName">Team</string>
+    <string name="signUp">Sign Up!</string>
+    <string name="signUpTitle">Sign Up Here!</string>
+    <string name="signIn">Sign In!</string>
+    <string name="verifyAccount">Verify Account</string>
+    <string name="loginTitle">Login</string>
+    <string name="code">Verification Code</string>
+    <string name="password">Password</string>
+    <string name="logout">Logout</string>
+    <string name="loginHere">Login Here!</string>
 </resources>
