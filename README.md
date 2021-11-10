@@ -44,7 +44,6 @@ Application is an android application programmed using the Java language. Tested
 ### Add Task
 
 ![add task screenshot](./screenshots/addTask.png)
-![add task submitted screenshot](./screenshots/addTaskSubmitted.png)
 
 
 - On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, status, and assign a team.
@@ -187,7 +186,19 @@ Application is an android application programmed using the Java language. Tested
    
 2. Homepage
    - Updates homepage title with user's username
-   - Intend to update so that if a user sets a nickname in usersettings, it will override username display.
+   - Intend to update so that if a user sets a nickname in userSettingsActivity, it will override username display.
+
+### Day 10
+#### Task for the Day
+1. Uploads
+   - On the “Add a Task” activity, allow users to optionally select a file to attach to that task.
+   - If a user attaches a file to a task, that file should be uploaded to S3, and associated with that task.
+   
+2. Displaying Files
+   - On the Task detail activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.
+   
+3. General
+   - Updates homepage to display the first part of user's email (everything before the "@").
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->

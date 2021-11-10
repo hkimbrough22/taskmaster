@@ -54,6 +54,7 @@ public class AddTaskActivity extends AppCompatActivity {
     EditText taskStatus;
 
     String taskStatusLower;
+    String awsImageKey;
 
     Team selectedTeam = null;
 
@@ -79,7 +80,6 @@ public class AddTaskActivity extends AppCompatActivity {
                         }
                         teamCompletableFuture.complete(teams);
                     }
-//                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
                 },
                 failure -> {
                     Log.i(TAG, "failed");
@@ -121,8 +121,12 @@ public class AddTaskActivity extends AppCompatActivity {
             taskBody = findViewById(R.id.addTaskDescriptionEditText);
             taskStatus = findViewById(R.id.addTaskStateEditText);
             taskStatusLower = taskStatus.getText().toString().toLowerCase();
-            selectImageAndSaveToS3();
 
+            if(awsImageKey != null){
+            saveTaskToDB(awsImageKey);
+            } else {
+                saveTaskToDB("");
+            }
 
             //selectFileAndSaveToS3(businessUnit, productNamePlainTextString); //*******************************************************
 
@@ -146,6 +150,11 @@ public class AddTaskActivity extends AppCompatActivity {
 //            );
 
 
+        });
+
+        Button addImageButton = findViewById(R.id.addTaskAddImageButton);
+        addImageButton.setOnClickListener(view -> {
+            selectImageAndSaveToS3();
         });
     }
 
@@ -189,8 +198,10 @@ public class AddTaskActivity extends AppCompatActivity {
                 pickImageFileInputStream,
                 success -> {
                     Log.i(TAG, "Succeeded in uploading file to S3. Key is: " + success.getKey());
-                    saveTaskToDB(success.getKey());
+//                    saveTaskToDB(success.getKey());
+                    awsImageKey = success.getKey();
                 },
+
                 failure -> {
                     Log.e(TAG, "Failed to upload file to S3: " + pickImageFilename + " with error: " + failure.getMessage(), failure);
                 }
@@ -211,7 +222,7 @@ public class AddTaskActivity extends AppCompatActivity {
                     .team(selectedTeam)
                     .body(taskBody.getText().toString())
                     .state(taskStatus.getText().toString())
-                    .productImageKey(awsImageKey)
+                    .taskImageKey(awsImageKey)
                     .build();
             Amplify.API.mutate(
                     ModelMutation.create(newTask),

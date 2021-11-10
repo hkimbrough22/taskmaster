@@ -30,4 +30,5 @@
     <string name="password">Password</string>
     <string name="logout">Logout</string>
     <string name="loginHere">Login Here!</string>
+    <string name="addImage">Add Image to Task</string>
 </resources>
