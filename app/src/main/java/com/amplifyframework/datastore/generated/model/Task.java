@@ -27,11 +27,13 @@ public final class Task implements Model {
   public static final QueryField BODY = field("Task", "body");
   public static final QueryField STATE = field("Task", "state");
   public static final QueryField TEAM = field("Task", "teamID");
+  public static final QueryField PRODUCT_IMAGE_KEY = field("Task", "productImageKey");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamID", type = Team.class) Team team;
+  private final @ModelField(targetType="String") String productImageKey;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -54,6 +56,10 @@ public final class Task implements Model {
       return team;
   }
   
+  public String getProductImageKey() {
+      return productImageKey;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -62,12 +68,13 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String body, String state, Team team) {
+  private Task(String id, String title, String body, String state, Team team, String productImageKey) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.state = state;
     this.team = team;
+    this.productImageKey = productImageKey;
   }
   
   @Override
@@ -83,6 +90,7 @@ public final class Task implements Model {
               ObjectsCompat.equals(getBody(), task.getBody()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
               ObjectsCompat.equals(getTeam(), task.getTeam()) &&
+              ObjectsCompat.equals(getProductImageKey(), task.getProductImageKey()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
       }
@@ -96,6 +104,7 @@ public final class Task implements Model {
       .append(getBody())
       .append(getState())
       .append(getTeam())
+      .append(getProductImageKey())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -111,6 +120,7 @@ public final class Task implements Model {
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
+      .append("productImageKey=" + String.valueOf(getProductImageKey()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -135,6 +145,7 @@ public final class Task implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -144,7 +155,8 @@ public final class Task implements Model {
       title,
       body,
       state,
-      team);
+      team,
+      productImageKey);
   }
   public interface TitleStep {
     BuildStep title(String title);
@@ -157,6 +169,7 @@ public final class Task implements Model {
     BuildStep body(String body);
     BuildStep state(String state);
     BuildStep team(Team team);
+    BuildStep productImageKey(String productImageKey);
   }
   
 
@@ -166,6 +179,7 @@ public final class Task implements Model {
     private String body;
     private String state;
     private Team team;
+    private String productImageKey;
     @Override
      public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -175,7 +189,8 @@ public final class Task implements Model {
           title,
           body,
           state,
-          team);
+          team,
+          productImageKey);
     }
     
     @Override
@@ -203,6 +218,12 @@ public final class Task implements Model {
         return this;
     }
     
+    @Override
+     public BuildStep productImageKey(String productImageKey) {
+        this.productImageKey = productImageKey;
+        return this;
+    }
+    
     /** 
      * @param id id
      * @return Current Builder instance, for fluent method chaining
@@ -215,12 +236,13 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state, Team team) {
+    private CopyOfBuilder(String id, String title, String body, String state, Team team, String productImageKey) {
       super.id(id);
       super.title(title)
         .body(body)
         .state(state)
-        .team(team);
+        .team(team)
+        .productImageKey(productImageKey);
     }
     
     @Override
@@ -241,6 +263,11 @@ public final class Task implements Model {
     @Override
      public CopyOfBuilder team(Team team) {
       return (CopyOfBuilder) super.team(team);
+    }
+    
+    @Override
+     public CopyOfBuilder productImageKey(String productImageKey) {
+      return (CopyOfBuilder) super.productImageKey(productImageKey);
     }
   }
   

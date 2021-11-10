@@ -19,8 +19,8 @@
 
     <EditText
         android:id="@+id/taskDetailsDescriptionEditText"
-        android:layout_width="312dp"
-        android:layout_height="390dp"
+        android:layout_width="269dp"
+        android:layout_height="281dp"
         android:layout_marginBottom="184dp"
         android:ems="10"
         android:gravity="start|top"
@@ -28,9 +28,10 @@
         android:text="@string/lorem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.253"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailsTitleTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.849" />
 
     <TextView
         android:id="@+id/taskStateTextView"
@@ -49,14 +50,25 @@
     <TextView
         android:id="@+id/taskAddedOnTextView"
         android:layout_width="170dp"
-        android:layout_height="50dp"
+        android:layout_height="49dp"
         android:layout_marginTop="8dp"
         android:textAlignment="textEnd"
         app:layout_constraintBottom_toTopOf="@+id/taskDetailsDescriptionEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintHorizontal_bias="0.804"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskStateTextView"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.009"
         tools:text="Task Added On Here" />
+
+    <ImageView
+        android:id="@+id/taskImageView"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/taskDetailsDescriptionEditText"
+        app:layout_constraintEnd_toStartOf="@+id/taskAddedOnTextView"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailsTitleTextView"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>
