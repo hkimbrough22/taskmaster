@@ -2,7 +2,7 @@
 **Author**: Haustin Kimbrough
 **Version**: 1.0.5
 
-**APK located in root of application.**
+**[APK](app-debug.apk) located in root of application.**
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
