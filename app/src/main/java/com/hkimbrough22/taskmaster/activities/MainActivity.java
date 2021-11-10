@@ -26,7 +26,12 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -46,11 +51,36 @@ public class MainActivity extends AppCompatActivity {
     protected static Resources resources;
 
     TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
+    List<Task> userTeamTasks = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //Testing S3 file upload
+//        File testFile = new File(getApplicationContext().getFilesDir(), "testFileName"); //makes file on the phone
+//
+//        try (BufferedWriter testFileBufferedWriter = new BufferedWriter(new FileWriter(testFile))){
+////            BufferedWriter testFileBufferedWriter = new BufferedWriter(new FileWriter(testFile));
+//            testFileBufferedWriter.append("test");
+////            testFileBufferedWriter.close();
+//        } catch (IOException ioe) {
+//            Log.i(TAG, "Error uploading file: " + ioe.getMessage());
+//        }
+//
+//        Amplify.Storage.uploadFile(
+//                "testKey",
+//                testFile,
+//                success -> {
+//                    Log.i(TAG, "Success in adding: " + success.getKey());
+//                },
+//                failure -> {
+//                    Log.i(TAG, "Failed in adding: " + failure.getMessage(), failure);
+//                }
+//        );
+
 
         AuthUser currentUser = Amplify.Auth.getCurrentUser();
 
@@ -92,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        List<Task> userTeamTasks = null;
         try {
             userTeamTasks = taskCompletableFuture.get();
         } catch (ExecutionException e) {
@@ -151,30 +180,56 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//    protected void getTaskList(){
+//
+//    }
+
+//    protected CompletableFuture<List<Task>> getListOfTasksFuture(){
+//
+//    }
+
     @Override
     protected void onResume() {
         super.onResume();
 
-
-
         String userName = sharedPref.getString(USER_USERNAME_KEY, "");
         String teamName = sharedPref.getString(USER_TEAM_KEY, "");
-        if (!userName.equals("")) {
-            ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userName));
-        }
-        if (!teamName.equals("")) {
-            ((TextView) findViewById(R.id.homepageTeamNameTextView)).setText(teamName);
-        }
+        Amplify.API.query(
+                ModelQuery.list(Task.class),
+                success -> {
+                    List<Task> taskList = new ArrayList<>();
+                    for (Task task : success.getData()) {
+                        if (task.getTeam().getName().equals(teamName)) {
+                            taskList.add(task);
+                        }
+                        Log.i(TAG, "Succeeded in adding to view: " + task.getTitle());
+                    }
+                    Collections.sort(taskList, (o1, o2) ->
+                            -o1.getCreatedAt().compareTo(o2.getCreatedAt()));
+                    runOnUiThread(() -> {
+                        taskListRecyclerViewAdapter.setTaskList(taskList);
+                        taskListRecyclerViewAdapter.notifyDataSetChanged();
+                    });
+                },
+                failure -> {
+                    Log.i(TAG, "failed");
+                }
+        );
 
         String userNickname = "";
         AuthUser currentUser = Amplify.Auth.getCurrentUser();
-
         if(currentUser != null) {
-            userNickname = currentUser.getUsername();
+            //https://stackoverflow.com/a/10386080/16970042
+            userNickname = currentUser.getUsername().substring(0, currentUser.getUsername().indexOf("@"));
         }
 
         if(!userNickname.equals("")){
             ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userNickname));
+        } else {
+            ((TextView) findViewById(R.id.homepageTitleTextView)).setText(resources.getString(R.string.UsernameTasks, userName));
+        }
+        if (!teamName.equals("")) {
+            ((TextView) findViewById(R.id.homepageTeamNameTextView)).setText(teamName);
         }
     }
 

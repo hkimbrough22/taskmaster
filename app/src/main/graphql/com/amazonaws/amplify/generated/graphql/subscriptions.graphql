@@ -19,6 +19,7 @@ subscription OnCreateTask {
       createdAt
       updatedAt
     }
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -46,6 +47,7 @@ subscription OnUpdateTask {
       createdAt
       updatedAt
     }
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -73,6 +75,7 @@ subscription OnDeleteTask {
       createdAt
       updatedAt
     }
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -91,6 +94,7 @@ subscription OnCreateTeam {
         title
         body
         state
+        taskImageKey
         _version
         _deleted
         _lastChangedAt
@@ -118,6 +122,7 @@ subscription OnUpdateTeam {
         title
         body
         state
+        taskImageKey
         _version
         _deleted
         _lastChangedAt
@@ -145,6 +150,7 @@ subscription OnDeleteTeam {
         title
         body
         state
+        taskImageKey
         _version
         _deleted
         _lastChangedAt

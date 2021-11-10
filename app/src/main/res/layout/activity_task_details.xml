@@ -19,9 +19,9 @@
 
     <EditText
         android:id="@+id/taskDetailsDescriptionEditText"
-        android:layout_width="312dp"
-        android:layout_height="390dp"
-        android:layout_marginBottom="184dp"
+        android:layout_width="247dp"
+        android:layout_height="319dp"
+        android:layout_marginTop="228dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/taskDetailsTitleTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/taskStateTextView"
@@ -46,17 +46,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Task State Here" />
 
-    <TextView
-        android:id="@+id/taskAddedOnTextView"
-        android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="8dp"
-        android:textAlignment="textEnd"
+    <ImageView
+        android:id="@+id/taskImageView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         app:layout_constraintBottom_toTopOf="@+id/taskDetailsDescriptionEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.813"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskStateTextView"
-        app:layout_constraintVertical_bias="0.0"
-        tools:text="Task Added On Here" />
+        app:layout_constraintTop_toBottomOf="@+id/taskDetailsTitleTextView"
+        app:layout_constraintVertical_bias="0.392"
+        tools:srcCompat="@tools:sample/avatars" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,7 @@
 **Author**: Haustin Kimbrough
 **Version**: 1.0.5
 
-**APK located in root of application.**
+**[APK](app-debug.apk) located in root of application.**
 
 ## Overview
 <!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for this class. (i.e. What's your problem domain?) -->
@@ -44,10 +44,13 @@ Application is an android application programmed using the Java language. Tested
 ### Add Task
 
 ![add task screenshot](./screenshots/addTask.png)
-![add task submitted screenshot](./screenshots/addTaskSubmitted.png)
+
+
+![add image](./screenshots/imageSelection.png)
 
 
 - On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, status, and assign a team.
+- When users click the "Add Image to Task" button, allows users to pick a local image and assign it to a task.
 - When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
 - Also redirects user to Homepage and updates list there with new Task if the task created was apart of the user's selected Team.
 
@@ -74,7 +77,7 @@ Application is an android application programmed using the Java language. Tested
 ![task detail screenshot](screenshots/taskDetails.png)
 
 
-- Should have a title at the top of the page, a description, and status.
+- Should have a title at the top of the page, a description, status, and image displayed.
 
 ## Daily Changelog
 ### Day 1
@@ -187,7 +190,19 @@ Application is an android application programmed using the Java language. Tested
    
 2. Homepage
    - Updates homepage title with user's username
-   - Intend to update so that if a user sets a nickname in usersettings, it will override username display.
+   - Intend to update so that if a user sets a nickname in userSettingsActivity, it will override username display.
+
+### Day 10
+#### Task for the Day
+1. Uploads
+   - On the “Add a Task” activity, allow users to optionally select a file to attach to that task.
+   - If a user attaches a file to a task, that file should be uploaded to S3, and associated with that task.
+   
+2. Displaying Files
+   - On the Task detail activity, if there is a file that is an image associated with a particular Task, that image should be displayed within that activity.
+   
+3. General
+   - Updates homepage to display the first part of user's email (everything before the "@").
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
