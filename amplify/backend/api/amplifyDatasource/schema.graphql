@@ -6,7 +6,7 @@ type Task @model
     body: String
     state: String
     team: Team @connection(fields: ["teamID"])
-    productImageKey: String
+    taskImageKey: String
 }
 
 type Team @model {

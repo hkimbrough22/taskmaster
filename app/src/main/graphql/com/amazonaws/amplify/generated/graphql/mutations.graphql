@@ -22,7 +22,7 @@ mutation CreateTask(
       createdAt
       updatedAt
     }
-    productImageKey
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -53,7 +53,7 @@ mutation UpdateTask(
       createdAt
       updatedAt
     }
-    productImageKey
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -84,7 +84,7 @@ mutation DeleteTask(
       createdAt
       updatedAt
     }
-    productImageKey
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -106,7 +106,7 @@ mutation CreateTeam(
         title
         body
         state
-        productImageKey
+        taskImageKey
         _version
         _deleted
         _lastChangedAt
@@ -137,7 +137,7 @@ mutation UpdateTeam(
         title
         body
         state
-        productImageKey
+        taskImageKey
         _version
         _deleted
         _lastChangedAt
@@ -168,7 +168,7 @@ mutation DeleteTeam(
         title
         body
         state
-        productImageKey
+        taskImageKey
         _version
         _deleted
         _lastChangedAt

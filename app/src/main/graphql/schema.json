@@ -324,7 +324,7 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "productImageKey",
+                        "name": "taskImageKey",
                         "description": null,
                         "type": {
                             "kind": "INPUT_OBJECT",
@@ -1013,7 +1013,7 @@
                         "deprecationReason": null
                     },
                     {
-                        "name": "productImageKey",
+                        "name": "taskImageKey",
                         "description": null,
                         "args": [],
                         "type": {
@@ -1725,7 +1725,7 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "productImageKey",
+                        "name": "taskImageKey",
                         "description": null,
                         "type": {
                             "kind": "SCALAR",
@@ -1796,7 +1796,7 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "productImageKey",
+                        "name": "taskImageKey",
                         "description": null,
                         "type": {
                             "kind": "INPUT_OBJECT",
@@ -1909,7 +1909,7 @@
                         "defaultValue": null
                     },
                     {
-                        "name": "productImageKey",
+                        "name": "taskImageKey",
                         "description": null,
                         "type": {
                             "kind": "SCALAR",

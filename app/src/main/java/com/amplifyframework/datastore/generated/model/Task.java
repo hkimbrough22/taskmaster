@@ -27,13 +27,13 @@ public final class Task implements Model {
   public static final QueryField BODY = field("Task", "body");
   public static final QueryField STATE = field("Task", "state");
   public static final QueryField TEAM = field("Task", "teamID");
-  public static final QueryField PRODUCT_IMAGE_KEY = field("Task", "productImageKey");
+  public static final QueryField TASK_IMAGE_KEY = field("Task", "taskImageKey");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String title;
   private final @ModelField(targetType="String") String body;
   private final @ModelField(targetType="String") String state;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamID", type = Team.class) Team team;
-  private final @ModelField(targetType="String") String productImageKey;
+  private final @ModelField(targetType="String") String taskImageKey;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -56,8 +56,8 @@ public final class Task implements Model {
       return team;
   }
   
-  public String getProductImageKey() {
-      return productImageKey;
+  public String getTaskImageKey() {
+      return taskImageKey;
   }
   
   public Temporal.DateTime getCreatedAt() {
@@ -68,13 +68,13 @@ public final class Task implements Model {
       return updatedAt;
   }
   
-  private Task(String id, String title, String body, String state, Team team, String productImageKey) {
+  private Task(String id, String title, String body, String state, Team team, String taskImageKey) {
     this.id = id;
     this.title = title;
     this.body = body;
     this.state = state;
     this.team = team;
-    this.productImageKey = productImageKey;
+    this.taskImageKey = taskImageKey;
   }
   
   @Override
@@ -90,7 +90,7 @@ public final class Task implements Model {
               ObjectsCompat.equals(getBody(), task.getBody()) &&
               ObjectsCompat.equals(getState(), task.getState()) &&
               ObjectsCompat.equals(getTeam(), task.getTeam()) &&
-              ObjectsCompat.equals(getProductImageKey(), task.getProductImageKey()) &&
+              ObjectsCompat.equals(getTaskImageKey(), task.getTaskImageKey()) &&
               ObjectsCompat.equals(getCreatedAt(), task.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), task.getUpdatedAt());
       }
@@ -104,7 +104,7 @@ public final class Task implements Model {
       .append(getBody())
       .append(getState())
       .append(getTeam())
-      .append(getProductImageKey())
+      .append(getTaskImageKey())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -120,7 +120,7 @@ public final class Task implements Model {
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
-      .append("productImageKey=" + String.valueOf(getProductImageKey()) + ", ")
+      .append("taskImageKey=" + String.valueOf(getTaskImageKey()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -156,7 +156,7 @@ public final class Task implements Model {
       body,
       state,
       team,
-      productImageKey);
+      taskImageKey);
   }
   public interface TitleStep {
     BuildStep title(String title);
@@ -169,7 +169,7 @@ public final class Task implements Model {
     BuildStep body(String body);
     BuildStep state(String state);
     BuildStep team(Team team);
-    BuildStep productImageKey(String productImageKey);
+    BuildStep taskImageKey(String taskImageKey);
   }
   
 
@@ -179,7 +179,7 @@ public final class Task implements Model {
     private String body;
     private String state;
     private Team team;
-    private String productImageKey;
+    private String taskImageKey;
     @Override
      public Task build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -190,7 +190,7 @@ public final class Task implements Model {
           body,
           state,
           team,
-          productImageKey);
+          taskImageKey);
     }
     
     @Override
@@ -219,8 +219,8 @@ public final class Task implements Model {
     }
     
     @Override
-     public BuildStep productImageKey(String productImageKey) {
-        this.productImageKey = productImageKey;
+     public BuildStep taskImageKey(String taskImageKey) {
+        this.taskImageKey = taskImageKey;
         return this;
     }
     
@@ -236,13 +236,13 @@ public final class Task implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String title, String body, String state, Team team, String productImageKey) {
+    private CopyOfBuilder(String id, String title, String body, String state, Team team, String taskImageKey) {
       super.id(id);
       super.title(title)
         .body(body)
         .state(state)
         .team(team)
-        .productImageKey(productImageKey);
+        .taskImageKey(taskImageKey);
     }
     
     @Override
@@ -266,8 +266,8 @@ public final class Task implements Model {
     }
     
     @Override
-     public CopyOfBuilder productImageKey(String productImageKey) {
-      return (CopyOfBuilder) super.productImageKey(productImageKey);
+     public CopyOfBuilder taskImageKey(String taskImageKey) {
+      return (CopyOfBuilder) super.taskImageKey(taskImageKey);
     }
   }
   

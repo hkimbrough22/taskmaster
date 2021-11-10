@@ -26,7 +26,7 @@ query SyncTasks(
         createdAt
         updatedAt
       }
-      productImageKey
+      taskImageKey
       _version
       _deleted
       _lastChangedAt
@@ -57,7 +57,7 @@ query GetTask($id: ID!) {
       createdAt
       updatedAt
     }
-    productImageKey
+    taskImageKey
     _version
     _deleted
     _lastChangedAt
@@ -86,7 +86,7 @@ query ListTasks(
         createdAt
         updatedAt
       }
-      productImageKey
+      taskImageKey
       _version
       _deleted
       _lastChangedAt
@@ -137,7 +137,7 @@ query GetTeam($id: ID!) {
         title
         body
         state
-        productImageKey
+        taskImageKey
         _version
         _deleted
         _lastChangedAt
