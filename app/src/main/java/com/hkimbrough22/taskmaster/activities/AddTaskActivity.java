@@ -155,13 +155,14 @@ public class AddTaskActivity extends AppCompatActivity {
         Button addImageButton = findViewById(R.id.addTaskAddImageButton);
         addImageButton.setOnClickListener(view -> {
             selectImageAndSaveToS3();
+
         });
     }
 
     protected void selectImageAndSaveToS3(){
         Intent imagePickingIntent = new Intent(Intent.ACTION_GET_CONTENT);
         imagePickingIntent.setType("*/*");
-        imagePickingIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png"});
+        imagePickingIntent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/jpeg", "image/png", "image/jpg"});
 //        startActivity(imagePickingIntent);
 //        ActivityResultLauncher<Intent> activityResultLauncher = getImagePickingActivityResultLauncher();
         activityResultLauncher.launch(imagePickingIntent);

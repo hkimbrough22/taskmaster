@@ -46,7 +46,11 @@ Application is an android application programmed using the Java language. Tested
 ![add task screenshot](./screenshots/addTask.png)
 
 
+![add image](./screenshots/imageSelection.png)
+
+
 - On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, status, and assign a team.
+- When users click the "Add Image to Task" button, allows users to pick a local image and assign it to a task.
 - When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
 - Also redirects user to Homepage and updates list there with new Task if the task created was apart of the user's selected Team.
 
@@ -73,7 +77,7 @@ Application is an android application programmed using the Java language. Tested
 ![task detail screenshot](screenshots/taskDetails.png)
 
 
-- Should have a title at the top of the page, a description, and status.
+- Should have a title at the top of the page, a description, status, and image displayed.
 
 ## Daily Changelog
 ### Day 1
