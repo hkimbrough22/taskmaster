@@ -54,6 +54,40 @@ Application is an android application programmed using the Java language. Tested
 - When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
 - Also redirects user to Homepage and updates list there with new Task if the task created was apart of the user's selected Team.
 
+### Add Task from Another Application
+- Allow users to initiate adding a task from another application by sharing a picture to Taskmaster
+
+#### Step 1 
+
+![imageShare](./screenshots/imageShare1.png)
+
+- Find an image you want to attach to a task.
+
+#### Step 2
+
+![imageShare](./screenshots/imageShare2.png)
+
+- Click and hold until the share option appears and click it.
+
+#### Step 3
+
+![imageShare](./screenshots/imageShare3.png)
+
+- Scroll all the way to the right and select "More" option.
+
+#### Step 4
+
+![imageShare](./screenshots/imageShare4.png)
+
+- Select Taskmaster
+
+#### Step 5
+
+![imageShare](./screenshots/imageShare5.png)
+
+- Fill in the rest of the data about your Task and save it.
+
+**Currently still needs bug fixes. After adding task this way, image does not reappear in TaskDetailsActivity**
 
 ### All Tasks
 
@@ -203,6 +237,12 @@ Application is an android application programmed using the Java language. Tested
    
 3. General
    - Updates homepage to display the first part of user's email (everything before the "@").
+
+### Day 11
+#### Task for the Day
+1. Adding a Task from Another Application
+   - Add an intent filter to your application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity with that image pre-selected.
+   - **Currently still needs bug fixes. After adding task this way, image does not reappear in TaskDetailsActivity**
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
