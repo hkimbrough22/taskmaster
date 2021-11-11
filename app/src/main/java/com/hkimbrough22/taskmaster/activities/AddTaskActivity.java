@@ -1,7 +1,5 @@
 package com.hkimbrough22.taskmaster.activities;
 
-import static com.hkimbrough22.taskmaster.activities.UserSettingsActivity.TAG;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -12,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
@@ -19,6 +18,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -33,10 +33,8 @@ import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -58,12 +56,38 @@ public class AddTaskActivity extends AppCompatActivity {
 
     Team selectedTeam = null;
 
+    Uri selectedImageFileUri;
+    String selectedImageFilename;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        activityResultLauncher = getImagePickingActivityResultLauncher();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
+
+        activityResultLauncher = getImagePickingActivityResultLauncher();
+
+        Intent intent = getIntent();
+
+        if((intent.getType() != null) && (intent.getType().startsWith("image/")))
+        {
+            Uri incomingFileUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (incomingFileUri != null)
+            {
+                try
+                {
+                    selectedImageFileUri = incomingFileUri;
+                    selectedImageFilename = getFilenameFromURI(incomingFileUri);
+
+                    InputStream incomingImageFileInputStream = getContentResolver().openInputStream(incomingFileUri);
+                    ImageView previewImageMainActivityImageView = findViewById(R.id.addTaskPreviewImageView);
+                    previewImageMainActivityImageView.setImageBitmap(BitmapFactory.decodeStream(incomingImageFileInputStream));
+                }
+                catch (FileNotFoundException fnfe)
+                {
+                    Log.e(TAG, "Could not get file from file picker! " + fnfe.getMessage(), fnfe);
+                }
+            }
+        }
 
         //Sets up spinners
         Spinner teamSpinner = findViewById(R.id.addTaskTeamSpinner);
@@ -179,7 +203,7 @@ public class AddTaskActivity extends AppCompatActivity {
                                 Uri pickedImageFileUri = result.getData().getData();
                                 try {
                                     InputStream pickedImageInputStream = getContentResolver().openInputStream(pickedImageFileUri);
-                                    String pickedImageFilename = getFileNameFromURI(pickedImageFileUri);
+                                    String pickedImageFilename = getFilenameFromURI(pickedImageFileUri);
                                     Log.i(TAG, "Succeeded in getting input stream from file on phone: " + pickedImageFilename);
                                     uploadInputStreamToS3(pickedImageInputStream, pickedImageFilename);
                                 } catch (FileNotFoundException fnfe) {
@@ -239,7 +263,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
 //https://stackoverflow.com/a/25005243/16970042
     @SuppressLint("Range")
-    public String getFileNameFromURI(Uri uri) {
+    public String getFilenameFromURI(Uri uri) {
         String result = null;
         if (uri.getScheme().equals("content")) {
             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
