@@ -7,6 +7,9 @@ type Task @model
     state: String
     team: Team @connection(fields: ["teamID"])
     taskImageKey: String
+    taskLatitude: String
+    taskLongitude: String
+    city: String
 }
 
 type Team @model {

@@ -27,6 +27,9 @@ query SyncTasks(
         updatedAt
       }
       taskImageKey
+      taskLatitude
+      taskLongitude
+      city
       _version
       _deleted
       _lastChangedAt
@@ -58,6 +61,9 @@ query GetTask($id: ID!) {
       updatedAt
     }
     taskImageKey
+    taskLatitude
+    taskLongitude
+    city
     _version
     _deleted
     _lastChangedAt
@@ -87,6 +93,9 @@ query ListTasks(
         updatedAt
       }
       taskImageKey
+      taskLatitude
+      taskLongitude
+      city
       _version
       _deleted
       _lastChangedAt
@@ -138,6 +147,9 @@ query GetTeam($id: ID!) {
         body
         state
         taskImageKey
+        taskLatitude
+        taskLongitude
+        city
         _version
         _deleted
         _lastChangedAt

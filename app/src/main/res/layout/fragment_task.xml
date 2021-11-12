@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/taskFragmentTextView"
         android:layout_width="264dp"
-        android:layout_height="300sp"
+        android:layout_height="180sp"
         android:lineSpacingExtra="8sp"
         android:text="@string/hello_blank_fragment"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -49,6 +49,7 @@ Application is an android application programmed using the Java language. Tested
 ![add image](./screenshots/imageSelection.png)
 
 
+- Activity first prompts user to allow for location access by the application.
 - On the “Add a Task” page, allow users to type in details about a new task, specifically a title, body, status, and assign a team.
 - When users click the "Add Image to Task" button, allows users to pick a local image and assign it to a task.
 - When users click the “submit” button, adds the new Task to DynamoDB and shows a Toast affirming addition to DB.
@@ -243,6 +244,19 @@ Application is an android application programmed using the Java language. Tested
 1. Adding a Task from Another Application
    - Add an intent filter to your application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity with that image pre-selected.
    - **Currently still needs bug fixes. After adding task this way, image does not reappear in TaskDetailsActivity**
+
+### Day 12
+#### Task for the Day
+1. Location
+   - When the user adds a task, their location should be retrieved and included as part of the saved Task.
+
+2. Displaying Location
+   - On the Task Detail activity, the location of a Task should be displayed if it exists.
+   
+3. UI updates
+   - Updates String displayed for each task.
+   - Currently adding a task only works when pulling in an image from another application. Need to update function calling for adding a task and image from local - currently redundantly calls functions and things are overlapping. 
+
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
