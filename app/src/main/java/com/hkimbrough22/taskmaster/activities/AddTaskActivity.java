@@ -171,7 +171,6 @@ public class AddTaskActivity extends AppCompatActivity {
         Button addImageButton = findViewById(R.id.addTaskAddImageButton);
         addImageButton.setOnClickListener(view -> {
             selectImageAndSaveToS3();
-
         });
 
         requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GET_FINE_LOCATION_PERMISSION);
@@ -224,12 +223,12 @@ public class AddTaskActivity extends AppCompatActivity {
                     public void onActivityResult(ActivityResult result) {
                         if(result.getResultCode() == Activity.RESULT_OK){
                             if(result.getData() != null){
-                                Uri pickedImageFileUri = result.getData().getData();
+                                selectedImageFileUri = result.getData().getData();
                                 try {
-                                    InputStream pickedImageInputStream = getContentResolver().openInputStream(pickedImageFileUri);
-                                    String pickedImageFilename = getFilenameFromURI(pickedImageFileUri);
-                                    Log.i(TAG, "Succeeded in getting input stream from file on phone: " + pickedImageFilename);
-                                    uploadInputStreamToS3(pickedImageInputStream, pickedImageFilename);
+                                    InputStream pickedImageInputStream = getContentResolver().openInputStream(selectedImageFileUri);
+                                    selectedImageFilename = getFilenameFromURI(selectedImageFileUri);
+                                    Log.i(TAG, "Succeeded in getting input stream from file on phone: " + selectedImageFilename);
+                                    uploadInputStreamToS3(pickedImageInputStream, selectedImageFilename);
                                 } catch (FileNotFoundException fnfe) {
                                     Log.e(TAG, "Could not get file from filepicker: " + fnfe.getMessage(), fnfe);
                                 }
@@ -248,6 +247,9 @@ public class AddTaskActivity extends AppCompatActivity {
                 success -> {
                     Log.i(TAG, "Succeeded in uploading file to S3. Key is: " + success.getKey());
 //                    saveTaskToDB(success.getKey());
+//                    if(taskTitle.getText().toString()){
+//
+//                    }
                     saveTaskToDB(success.getKey());
 
                 },
@@ -259,8 +261,8 @@ public class AddTaskActivity extends AppCompatActivity {
     }
 
 
-    protected void saveTaskToDB(String awsImageKey)
-    {
+    protected void saveTaskToDB(String awsImageKey){
+        taskStatusLower = taskStatus.getText().toString().toLowerCase();
         if (!taskStatusLower.equals("new") &&
                 !taskStatusLower.equals("in progress") &&
                 !taskStatusLower.equals("complete") &&
