@@ -16,6 +16,8 @@ import com.amplifyframework.datastore.generated.model.Task;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.TaskNotFoundException;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
@@ -34,8 +36,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
         CompletableFuture<Task> taskCompletableFuture = new CompletableFuture<>();
 
         String taskTitle = intent.getExtras().get(MainActivity.TASK_TITLE_EXTRA_STRING).toString();
-        String taskBody = intent.getExtras().get(MainActivity.TASK_BODY_EXTRA_STRING).toString();
-        String taskState = intent.getExtras().get(MainActivity.TASK_STATE_EXTRA_STRING).toString();
+//        String taskBody = intent.getExtras().get(MainActivity.TASK_BODY_EXTRA_STRING).toString();
+//        String taskState = intent.getExtras().get(MainActivity.TASK_STATE_EXTRA_STRING).toString();
 
         Amplify.API.query(
             ModelQuery.list(Task.class),
@@ -55,14 +57,19 @@ public class TaskDetailsActivity extends AppCompatActivity {
                     getAndSetImage(selectedTask.getTaskImageKey());
 
 //                    Task selectedTask2 = selectedTask;  // TODO: investigate how to make this better
+                Task finalSelectedTask = selectedTask;
                 runOnUiThread(() ->
                 {
                     TextView taskTitleTextView = findViewById(R.id.taskDetailsTitleTextView);
                     taskTitleTextView.setText(taskTitle);
                     EditText taskBodyEditText = findViewById(R.id.taskDetailsDescriptionEditText);
-                    taskBodyEditText.setText(taskBody);
+                    taskBodyEditText.setText(finalSelectedTask.getBody());
                     TextView taskStateTextView = findViewById(R.id.taskStateTextView);
-                    taskStateTextView.setText(taskState);
+                    taskStateTextView.setText(finalSelectedTask.getState());
+                    TextView taskLatitudeTextView = findViewById(R.id.taskLatitudeTextView);
+                    taskLatitudeTextView.setText(finalSelectedTask.getTaskLatitude());
+                    TextView taskLongitudeTextView = findViewById(R.id.taskLongitudeTextView);
+                    taskLongitudeTextView.setText(finalSelectedTask.getTaskLongitude());
 
                 });
                 taskCompletableFuture.complete(selectedTask);

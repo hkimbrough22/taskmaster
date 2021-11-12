@@ -53,7 +53,16 @@ public class TaskListRecyclerViewAdapter extends RecyclerView.Adapter<TaskListRe
         Task task = taskList.get(position);
         View taskFragment = holder.itemView;
         TextView taskFragmentTextView = taskFragment.findViewById(R.id.taskFragmentTextView);
-        taskFragmentTextView.setText(task.toString());
+//        userNickname = currentUser.getUsername().substring(0, currentUser.getUsername().indexOf("@"));
+        String date = task.getCreatedAt().toString().substring(task.getCreatedAt().toString().indexOf("'") + 1, task.getCreatedAt().toString().indexOf("Z"));
+        String stringToShow =
+                "Task: " + task.getTitle() +
+                "\nCreated At: " + date +
+                "\nCurrent State: " + task.getState() +
+                "\nLatitude: " + task.getTaskLatitude() +
+                "\nLongitude: " + task.getTaskLongitude() +
+                "\n------------------------------------------------";
+        taskFragmentTextView.setText(stringToShow);
 
         taskFragment.setOnClickListener(view -> {
             Intent taskDetailsIntent = new Intent(associatedActivity, TaskDetailsActivity.class);

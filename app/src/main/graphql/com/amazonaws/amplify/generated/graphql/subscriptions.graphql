@@ -20,6 +20,9 @@ subscription OnCreateTask {
       updatedAt
     }
     taskImageKey
+    taskLatitude
+    taskLongitude
+    city
     _version
     _deleted
     _lastChangedAt
@@ -48,6 +51,9 @@ subscription OnUpdateTask {
       updatedAt
     }
     taskImageKey
+    taskLatitude
+    taskLongitude
+    city
     _version
     _deleted
     _lastChangedAt
@@ -76,6 +82,9 @@ subscription OnDeleteTask {
       updatedAt
     }
     taskImageKey
+    taskLatitude
+    taskLongitude
+    city
     _version
     _deleted
     _lastChangedAt
@@ -95,6 +104,9 @@ subscription OnCreateTeam {
         body
         state
         taskImageKey
+        taskLatitude
+        taskLongitude
+        city
         _version
         _deleted
         _lastChangedAt
@@ -123,6 +135,9 @@ subscription OnUpdateTeam {
         body
         state
         taskImageKey
+        taskLatitude
+        taskLongitude
+        city
         _version
         _deleted
         _lastChangedAt
@@ -151,6 +166,9 @@ subscription OnDeleteTeam {
         body
         state
         taskImageKey
+        taskLatitude
+        taskLongitude
+        city
         _version
         _deleted
         _lastChangedAt

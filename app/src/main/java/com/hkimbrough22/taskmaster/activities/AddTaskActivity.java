@@ -4,11 +4,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -27,6 +31,11 @@ import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.amplifyframework.datastore.generated.model.Team;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.CancellationToken;
+import com.google.android.gms.tasks.OnTokenCanceledListener;
 import com.hkimbrough22.taskmaster.R;
 import com.hkimbrough22.taskmaster.adapters.TaskListRecyclerViewAdapter;
 
@@ -41,16 +50,20 @@ import java.util.concurrent.ExecutionException;
 public class AddTaskActivity extends AppCompatActivity {
 
     public final static String TAG = "hkim_addTaskActivity";
-    public final static String NEW_TASK = "newTask";
+    public final static int GET_FINE_LOCATION_PERMISSION = 1;
 
-    TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
+//    TaskListRecyclerViewAdapter taskListRecyclerViewAdapter;
 
     public ActivityResultLauncher<Intent> activityResultLauncher;
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     EditText taskTitle;
     EditText taskBody;
     EditText taskStatus;
 
+    String taskLatitude = "";
+    String taskLongitude = "";
+    String city = "Unknown City";
     String taskStatusLower;
     String awsImageKey;
 
@@ -146,34 +159,13 @@ public class AddTaskActivity extends AppCompatActivity {
             taskStatus = findViewById(R.id.addTaskStateEditText);
             taskStatusLower = taskStatus.getText().toString().toLowerCase();
 
-            if(awsImageKey != null){
-            saveTaskToDB(awsImageKey);
-            } else {
-                saveTaskToDB("");
+            try {
+                InputStream selectedImageInputStream = getContentResolver().openInputStream(selectedImageFileUri);
+                uploadInputStreamToS3(selectedImageInputStream, selectedImageFilename);
+                Log.i(TAG, "Successfully uploaded image to S3: " + selectedImageFilename);
+            } catch (FileNotFoundException fnfe) {
+                Log.e(TAG, "Could not find Input Stream: " + fnfe.getMessage(), fnfe);
             }
-
-            //selectFileAndSaveToS3(businessUnit, productNamePlainTextString); //*******************************************************
-
-            // take teamString and do query to DB for team
-            // take team and use that for taskbuilder below
-//            Amplify.API.query(
-//                    ModelQuery.list(Team.class),
-//                    success -> {
-//                        if (success.hasData()) {
-//                            for (Team team : success.getData()) {
-//                                if (team.getName().equals(selection)) {
-//                                    selectedTeam = team;
-//                                }
-//                            }
-//                        }
-////                    taskList = taskList.stream().map(Task::getCreatedAt).sorted().collect(toList());
-//                    },
-//                    failure -> {
-//                        Log.i(TAG, "failed");
-//                    }
-//            );
-
-
         });
 
         Button addImageButton = findViewById(R.id.addTaskAddImageButton);
@@ -181,6 +173,38 @@ public class AddTaskActivity extends AppCompatActivity {
             selectImageAndSaveToS3();
 
         });
+
+        requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GET_FINE_LOCATION_PERMISSION);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getApplicationContext());
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationProviderClient.flushLocations();
+        // This will grab current location which is more up to date
+        fusedLocationProviderClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, new CancellationToken()
+        {
+            @Override
+            public boolean isCancellationRequested()
+            {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener)
+            {
+                return null;
+            }
+        }).addOnSuccessListener(location ->
+        {
+            Log.i(TAG, "Our latitude: " + location.getLatitude());
+            taskLatitude = Double.toString(location.getLatitude());
+            Log.i(TAG, "Our longitude: " + location.getLongitude());
+            taskLongitude = Double.toString(location.getLongitude());
+
+        });
+
     }
 
     protected void selectImageAndSaveToS3(){
@@ -224,7 +248,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 success -> {
                     Log.i(TAG, "Succeeded in uploading file to S3. Key is: " + success.getKey());
 //                    saveTaskToDB(success.getKey());
-                    awsImageKey = success.getKey();
+                    saveTaskToDB(success.getKey());
+
                 },
 
                 failure -> {
@@ -248,6 +273,9 @@ public class AddTaskActivity extends AppCompatActivity {
                     .body(taskBody.getText().toString())
                     .state(taskStatus.getText().toString())
                     .taskImageKey(awsImageKey)
+                    .taskLatitude(taskLatitude)
+                    .taskLongitude(taskLongitude)
+                    .city(city)
                     .build();
             Amplify.API.mutate(
                     ModelMutation.create(newTask),
